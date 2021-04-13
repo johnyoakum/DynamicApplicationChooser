@@ -182,7 +182,7 @@ Function Start-ApplicationPicker {
                 #Add Code to add apps
                 $Id = "{0:D2}" -f $Count
                 $AppId = "XApplications$Id" 
-                If (!$Script:Debug) { $tsenv.Value($AppId) = $($App.Name) }
+                If (!$Script:Debug) { $tsenv.Value($AppId) = $($App.Name) } else { Write-Host $($App.Name) }
                 $Count = $Count + 1
             }
 
@@ -191,7 +191,7 @@ Function Start-ApplicationPicker {
             # Code to set the task sequence variables from the API
             ForEach ($Variable in $ProfileVariables) {
                 If ($($Variable.Value) -eq 1 ) { $Value = $True } else { $Value = $False }
-                If (!$Script:Debug) { $tsenv.Value("$($Variable.Name)") = $Value }
+                If (!$Script:Debug) { $tsenv.Value("$($Variable.Name)") = $Value } else { Write-Host $($Variable.Name) }
             }
         }
             If (!$Script:Debug) { exit }
