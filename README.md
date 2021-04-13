@@ -1,6 +1,6 @@
 # DynamicApplicationChooser
 
-In the evironment that I manage, we have a distribution point at the Dell Factory so that we can deploy customized tasksequences and application builds to brand new machines.
+In the evironment that I manage, we have a distribution point at the Dell Factory so that we can deploy customized task sequences and application builds to brand new machines.
 
 To facilitate this, we have built a custom Provisioning Portal, which allows us to provision the device with hostname, OU to put it in in AD, Task Sequence to run and Application build to use for that task sequence. This gives us the flexibility to image a machine at the factory with any software load we want, all dynamic.
 
