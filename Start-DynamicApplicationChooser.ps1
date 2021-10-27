@@ -1,4 +1,4 @@
-﻿Add-Type -AssemblyName PresentationCore
+Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName PresentationFramework
 
 #Create the image from base64
@@ -8,20 +8,24 @@ $StringWithImage = 'iVBORw0KGgoAAAANSUhEUgAAAO0AAACuCAYAAADagYpNAAAgAElEQVR4Xu1d
 # Convert image back from base64
 $iconImage = [convert]::FromBase64String($StringWithImage)
 
+# Set the Background and Foreground color for your color scheme
+$Script:BackgroundColor = "#235183"
+$Script:ForegroundColor = "#FFFFFF"
+
 [xml]$ApplicationProfilePicker = @"
 <Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        Title="UA Application Picker" Name="Title" Height="480" Width="800" BorderBrush="White" Background="#FF235183" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Application Picker" Name="Title" Height="480" Width="800" BorderBrush="$Script:ForegroundColor" Background="$Script:BackgroundColor" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="39*"/>
             <RowDefinition Height="412*"/>
         </Grid.RowDefinitions>
-        <Button Name="buttonNext" Content="Next" HorizontalAlignment="Left" Height="40" Margin="600,350.821,0,0" VerticalAlignment="Top" Width="180" Foreground="#FF235183" FontSize="18" FontWeight="Bold" IsDefault="True" Grid.Row="1"/>
+        <Button Name="buttonNext" Content="Next" HorizontalAlignment="Left" Height="40" Margin="600,350.821,0,0" VerticalAlignment="Top" Width="180" Foreground="$Script:BackgroundColor" FontSize="18" FontWeight="Bold" IsDefault="True" Grid.Row="1"/>
         <Image Name="image" HorizontalAlignment="Left" Margin="20,253,0,20" Width="181" Grid.Row="1" />
-        <Label Name="Welcome" Content="Welcome to the UA Dynamic Application Picker" HorizontalAlignment="Center" Margin="20,20,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Width="760" Grid.RowSpan="2" HorizontalContentAlignment="Center"/>
+        <Label Name="Welcome" Content="Welcome to the Dynamic Application Picker" HorizontalAlignment="Center" Margin="20,20,0,0" VerticalAlignment="Top" FontSize="24" Foreground="$Script:ForegroundColor" Width="760" Grid.RowSpan="2" HorizontalContentAlignment="Center"/>
         <ComboBox Name="ApplicationProfile" HorizontalAlignment="Left" Margin="200,135,0,0" VerticalAlignment="Top" Width="400" Height="40" Grid.Row="1" FontSize="18"/>
-        <Label Name="Instructions" Content="Please Choose the Application Profile Base to Start With" HorizontalAlignment="Center" Margin="20,81,14,0" VerticalAlignment="Top" FontSize="20" Foreground="White" Width="760" HorizontalContentAlignment="Center" Grid.Row="1"/>
+        <Label Name="Instructions" Content="Please Choose the Application Profile Base to Start With" HorizontalAlignment="Center" Margin="20,81,14,0" VerticalAlignment="Top" FontSize="20" Foreground="$Script:ForegroundColor" Width="760" HorizontalContentAlignment="Center" Grid.Row="1"/>
     </Grid>
 </Window>
 "@
@@ -30,16 +34,16 @@ $iconImage = [convert]::FromBase64String($StringWithImage)
 <Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="UA Application Picker" Name="Title"  Height="480" Width="800" BorderBrush="White" Background="#FF235183" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Application Picker" Name="Title"  Height="480" Width="800" BorderBrush="White" Background="$Script:BackgroundColor" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="39*"/>
             <RowDefinition Height="412*"/>
         </Grid.RowDefinitions>
-        <Button Name="buttonStart" Content="Start" HorizontalAlignment="Left" Height="40" Margin="600,350.821,0,0" VerticalAlignment="Top" Width="180" Foreground="#FF235183" FontSize="18" FontWeight="Bold" IsDefault="True" Grid.Row="1"/>
-        <Button Name="buttonBack" Content="Back" HorizontalAlignment="Left" Height="40" Margin="380,350.821,0,0" VerticalAlignment="Top" Width="180" Foreground="#FF235183" FontSize="18" FontWeight="Bold" IsDefault="True" Grid.Row="1"/>
+        <Button Name="buttonStart" Content="Start" HorizontalAlignment="Left" Height="40" Margin="600,350.821,0,0" VerticalAlignment="Top" Width="180" Foreground="$Script:BackgroundColor" FontSize="18" FontWeight="Bold" IsDefault="True" Grid.Row="1"/>
+        <Button Name="buttonBack" Content="Back" HorizontalAlignment="Left" Height="40" Margin="380,350.821,0,0" VerticalAlignment="Top" Width="180" Foreground="$Script:BackgroundColor" FontSize="18" FontWeight="Bold" IsDefault="True" Grid.Row="1"/>
         <Image Name="image" HorizontalAlignment="Left" Margin="20,253,0,20" Width="181" Grid.Row="1" />
-        <Label Name="Welcome" Content="Add or Remove Applications for this Deployment" HorizontalAlignment="Center" Margin="20,20,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" Width="760" Grid.RowSpan="2" HorizontalContentAlignment="Center"/>
+        <Label Name="Welcome" Content="Add or Remove Applications for this Deployment" HorizontalAlignment="Center" Margin="20,20,0,0" VerticalAlignment="Top" FontSize="24" Foreground="$Script:ForegroundColor" Width="760" Grid.RowSpan="2" HorizontalContentAlignment="Center"/>
         <ListView Name="Applications" HorizontalAlignment="Right" Height="290" Margin="20,40,20,0" Grid.Row="1" VerticalAlignment="Top" Width="390" SelectionMode="Multiple">
             <ListView.GroupStyle>
                 <GroupStyle>
@@ -69,12 +73,13 @@ $iconImage = [convert]::FromBase64String($StringWithImage)
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBlock Name="Instructions" HorizontalAlignment="Left" Margin="20,40,0,0" Grid.Row="1" FontSize="13" TextWrapping="Wrap" VerticalAlignment="Top" Height="193" Width="360" Foreground="White"/>
+        <TextBlock Name="Instructions" HorizontalAlignment="Left" Margin="20,40,0,0" Grid.Row="1" FontSize="13" TextWrapping="Wrap" VerticalAlignment="Top" Height="193" Width="360" Foreground="$Script:ForegroundColor"/>
     </Grid>
 </Window>
 "@
 
 $Script:Debug = $True
+$APIServer = "https://emutility.alaska.edu"
 
 Function Start-ApplicationProfilePicker {
     # Create Main Application form
@@ -92,7 +97,7 @@ Function Start-ApplicationProfilePicker {
     $Title.Icon = $iconImage
 
     # Get the Application Profiles from the WebService
-    $ApplicationProfiles = Invoke-RestMethod "http://sccm-gateway.uaa.alaska.edu:1014/api/ApplicationProfile" -Method Get
+    $ApplicationProfiles = Invoke-RestMethod "$APIServer/ApplicationProfile" -Method Get
 
     # Retrieve the location chosen when entering device information
     #If (!$Debug) { $tsenv = New-Object -ComObject Microsoft.SMS.TSEnvironment }
@@ -143,26 +148,37 @@ Function Start-ApplicationPicker {
 
     # Add the Applications to the List Box
         # Get the applications from the Application Profile
-        $ProfileApplications = Invoke-RestMethod "http://sccm-gateway.uaa.alaska.edu:1005/api/ApplicationLists/$SelectedProfile" -Method Get
-        $ProfileVariables = Try { Invoke-RestMethod -Uri "http://sccm-gateway.uaa.alaska.edu:1006/api/VariableList/$SelectedProfile" } catch {}
+        $ProfileApplications = Invoke-RestMethod "$APIServer/ApplicationLists/$SelectedProfile" -Method Get
+        $ProfileVariables = Try { Invoke-RestMethod -Uri "$APIServer/VariableList/$SelectedProfile" } catch {}
 
         # Get all Applications
-        $AllApplications = Invoke-RestMethod "http://sccm-gateway.uaa.alaska.edu:1015/api/AllApplications" -Method Get
-        $Applications = $AllApplications | Select-Object -Property Name | Where-Object { $_.Name -notlike "Uninstall*" } |Sort-Object -Property Name
-        $Current = @()
+        $Current = [System.Collections.ArrayList]::new()
 
-        $AllItems = @()
-        $AllItems = Invoke-RestMethod "http://sccm-gateway.uaa.alaska.edu:1016/api/AllCategories" -Method Get
+        $AllItems = Invoke-RestMethod "$APIServer/AllCategories" -Method Get
         $AllUniqueItems = $AllItems | Select-Object -Property DisplayName,
                                         @{Name='Categories';Expression={If ( ![string]::IsNullOrWhiteSpace($_.Categories) ) { $($_.Categories).Trim() } else { 'Unknown' } } } 
-        $Items = $AllUniqueItems | Select-Object -Property Categories -Unique | Sort-Object -Property Categories
 
-        ForEach ($Application in $Applications){
-            $Current += New-Object PSObject -prop @{
-            #$Current += [pscustomobject]@{
-            Name=$Application.Name
-            Category = $($AllUniqueItems | Where-Object { $_.DisplayName -eq $Application.Name }).Categories
-            Selected = If ($ProfileApplications.ApplicationName -contains $Application.Name ){ $True } else { $False }
+
+        ForEach ($Application in $AllUniqueItems){
+            If ($Application.Categories -like "*;*") {
+            $Categories = $($($Application.Categories) -Split ";").Trim()
+
+            ForEach ($Category in $Categories) {
+                $CurrentApp = New-Object PSObject -prop @{
+                Name=$Application.DisplayName
+                Category = $Category
+                Selected = If ($ProfileApplications.ApplicationName -contains $Application.DisplayName ){ $True } else { $False }
+                }
+                [void]$Current.Add($CurrentApp)
+            }
+            }
+            else {
+                $CurrentApp = New-Object PSObject -prop @{
+                Name=$Application.DisplayName
+                Category = $($Application.Categories).Trim()
+                Selected = If ($ProfileApplications.ApplicationName -contains $Application.DisplayName ){ $True } else { $False }
+                }
+                [void]$Current.Add($CurrentApp)
             }
         }
         $AllData = $Current | Sort-Object -Property Category,Name
