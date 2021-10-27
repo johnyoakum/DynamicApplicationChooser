@@ -15,3 +15,20 @@ If the device is not found in the provisioning portal, then it kicks off a manau
 This project is the replacement for UI++ for our application deployments for those manual builds. It leverages our Provisioning Portal to select the base apps based on the profile you select, and then allows you to add or remove applications from that list. Albeit, not super cleanly, I have added the ability to leverage Administrative categories in MEMCM to group the Applications to make it easier to find. In my environment, I have over 650 applications to manage and in this script, it displays ALL of them, allowing much more flexibility for the Technician to build a computer the way they need to, first time out.  
 
 This is customized with our branding, but it gives you an idea as to what and how it can be done.
+
+I updated this while at MMS MIAMI and now it is working well... Please change the following lines prior to leveraging:
+Line 5: Change to the base64 encoded value of the logo that you would want to use
+Line 12: Change to the hex value of your background color
+Line 13: Change to the hex value of your foreground color
+Line 81: Change from $True to $False
+Line 82: Change to point to the server that you use for calling your APIs
+
+Along those lines, you will need to add an API to your system: /AllCategories
+
+The syntax for the endpoint will be the following:
+
+$Password = ConvertTo-SecureString “SQL PASSWORD” -AsPlainText -Force
+    $Credential = New-Object System.Management.Automation.PSCredential (“SQL USERNAME”, $Password)
+Invoke-Sqlcmd -ServerInstance <SCCM SITE SERVER> -Database CM_<SITECODE> -Credential $Credential -Query "SELECT App.DisplayName,stuff((select '; '+ LC.CategoryInstanceName	from v_LocalizedCategories LC, vAdminCategoryMemberships ACM where ACM.CategoryInstanceID = LC.CategoryInstanceID AND App.CI_UniqueID = ACM.ObjectKey for xml path(''), type).value('.', 'varchar(max)'), 1, 1, '') As 'Categories' FROM fn_ListLatestApplicationCIs(1033) App ORDER BY App.DisplayName" | ConvertTo-Json
+  
+You may have to modify the connection as you may not need to have the authentication.
